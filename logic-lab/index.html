@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>数字逻辑实验台</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="logo"><span class="chip">⚡</span>数字逻辑实验台</div>
+  <div class="sep"></div>
+  <button id="runBtn" class="primary">▶ 运行</button>
+  <div class="speed-ctl">
+    时钟速度
+    <input id="speed" type="range" min="50" max="2000" step="50" value="500">
+    <b id="speedLabel">500ms / 1Hz</b>
+  </div>
+  <div class="spacer"></div>
+  <button id="ttBtn">真值表</button>
+  <button id="delBtn">删除所选</button>
+  <button id="clearBtn">清空</button>
+</header>
+
+<div class="main">
+  <aside class="palette">
+    <h3>元件</h3>
+    <button data-add="INPUT"><span class="sym">🔘</span>输入</button>
+    <button data-add="OUTPUT"><span class="sym">💡</span>输出</button>
+    <button data-add="AND"><span class="sym">∩</span>与门</button>
+    <button data-add="OR"><span class="sym">∪</span>或门</button>
+    <button data-add="NOT"><span class="sym">¬</span>非门</button>
+    <button data-add="XOR"><span class="sym">⊕</span>异或门</button>
+    <button data-add="CLOCK"><span class="sym">⏱</span>时钟</button>
+    <div class="hint">
+      点击按钮放置元件。<br>
+      拖动元件移动位置。<br>
+      从圆点端口拉线到另一端口完成连线。<br>
+      点击输入元件切换 0/1；点击时钟启停。<br>
+      Delete 删除选中，Esc 取消连线。
+    </div>
+  </aside>
+
+  <div class="canvas-wrap">
+    <svg id="canvas" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div class="statusbar" id="status">就绪</div>
+  </div>
+
+  <aside class="sidebar">
+    <section>
+      <h3>电路状态</h3>
+      <div id="stats"></div>
+    </section>
+    <section>
+      <h3>错误</h3>
+      <div id="errors"></div>
+    </section>
+    <section>
+      <h3>选中</h3>
+      <div id="selInfo" class="sel-info muted">未选中任何对象</div>
+    </section>
+    <section>
+      <h3>图例</h3>
+      <div class="legend">
+        <div><span class="sw" style="border-color:var(--hi)"></span>高电平 1</div>
+        <div><span class="sw" style="border-color:var(--lo)"></span>低电平 0</div>
+        <div><span class="sw" style="border-color:var(--unk);border-top-style:dashed"></span>未知 X（未连接/冲突/环路）</div>
+        <div><span class="sw" style="border-color:var(--err);border-top-style:dashed"></span>重复驱动冲突</div>
+      </div>
+    </section>
+  </aside>
+</div>
+
+<!-- 真值表弹窗 -->
+<div class="modal-mask" id="ttMask">
+  <div class="modal">
+    <div class="modal-head">
+      <b>真值表</b>
+      <span class="muted" style="font-size:12px">选择参与枚举的输入；时钟按当前相位冻结</span>
+      <button class="x" id="ttClose">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="tt-pick" id="ttPick"></div>
+      <div id="ttWarn"></div>
+      <div id="ttTable"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

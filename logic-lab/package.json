@@ -1,0 +1,15 @@
+{
+  "name": "logic-lab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "交互式数字逻辑实验台：门级仿真、时钟、真值表、冲突与环路检测",
+  "scripts": {
+    "test": "node test/engine.test.js && node test/ui.smoke.test.js",
+    "test:engine": "node test/engine.test.js",
+    "test:ui": "node test/ui.smoke.test.js",
+    "start": "python3 -m http.server 8000"
+  },
+  "devDependencies": {
+    "jsdom": "^24.0.0"
+  }
+}
